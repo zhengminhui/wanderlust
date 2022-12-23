@@ -61,6 +61,7 @@ const AMapComponent = () => {
 
   useEffect(() => {
     if (mapRef.current) {
+      // @ts-ignore
       window._AMapSecurityConfig = {
         securityJsCode: "11dacac7642ca76c57e3b7dc6d6db48f",
       };
@@ -143,7 +144,7 @@ const AMapComponent = () => {
               var endLngLat = [116.415402, 40.057044];
               const name = point.name;
 
-              driving.search(startLngLat, endLngLat, function (status, result) {
+              driving.search(startLngLat, endLngLat, function (status:any, result:any) {
                 console.log(name, status, result);
               });
             });
