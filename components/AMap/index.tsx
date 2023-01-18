@@ -126,11 +126,6 @@ const AMapComponent = () => {
               marker.setTitle(name);
               mapInstance.add(marker);
             });
-            const mockTarget = [116.415402, 40.057044];
-            // var dis1 = AMap.GeometryUtil.distance(mockPoints[0], mockTarget);
-            // var dis2 = AMap.GeometryUtil.distance(mockPoints[1], mockTarget);
-            // var dis3 = AMap.GeometryUtil.distance(mockPoints[2], mockTarget);
-            // console.log(dis1, dis2, dis3);
 
             // get route distance and time
             pointsWithName.forEach((point, index) => {
@@ -144,9 +139,13 @@ const AMapComponent = () => {
               var endLngLat = [116.415402, 40.057044];
               const name = point.name;
 
-              driving.search(startLngLat, endLngLat, function (status:any, result:any) {
-                console.log(name, status, result);
-              });
+              driving.search(
+                startLngLat,
+                endLngLat,
+                function (status: any, result: any) {
+                  console.log(name, status, result);
+                }
+              );
             });
           }
         })

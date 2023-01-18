@@ -1,11 +1,14 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
-// import styles from "../styles/Home.module.css";
 
 import dynamic from "next/dynamic";
+import SearchBar from "../components/SearchBar";
 
 const AMapComponent = dynamic(() => import("../components/AMap"), {
+  ssr: false,
+});
+const InfoPanel = dynamic(() => import("../components/InfoPanel"), {
   ssr: false,
 });
 
@@ -20,27 +23,16 @@ export default function Home() {
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="main flex flex-col">
+      <main className="main items-center flex flex-col w-[50%] m-auto">
         <div className="banner h-[5vh] mx-4 flex items-center text-xl">
           今晚去哪吃
         </div>
-        <div className="map-wrapper w-[390px] h-[73vh]">
-          <AMapComponent />
-        </div>
-        <div className="bottom-box h-[20vh] mx-4 mt-4">
-          <p>当前选择福禄娃一家人火锅(天通苑店)</p>
-          <p>
-            距离美和园有 {13008 / 1000} 公里，用时 {(1308 / 60).toFixed(2)}{" "}
-            分钟, 花费 36 元
-          </p>
-          <p>
-            距离清榆园有 {12484 / 1000} 公里，用时 {(1500 / 60).toFixed(2)}{" "}
-            分钟, 花费 34 元
-          </p>
-          <p>
-            距离好世界有 {23516 / 1000} 公里，用时 {(1744 / 60).toFixed(2)}{" "}
-            分钟, 花费 59 元
-          </p>
+        <div className="map-wrapper w-[390px] h-full">
+          <SearchBar />
+          <div className="h-[70vh]">
+            <AMapComponent />
+          </div>
+          <InfoPanel restaurantInfo={{}} addressArr={[]} />
         </div>
       </main>
     </>
