@@ -1,6 +1,7 @@
-const InfoPanel = (restaurantInfo: any, addressArr: any[]) => {
+const InfoPanel = ({ restaurantInfo, addressArr }) => {
   const { name } = restaurantInfo;
   console.log(restaurantInfo, addressArr);
+
   return (
     <div className="bottom-box h-[20vh] mx-4 mt-4">
       <p>当前选择{name}</p>

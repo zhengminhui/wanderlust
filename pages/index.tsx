@@ -4,6 +4,7 @@ import { Inter } from "@next/font/google";
 
 import dynamic from "next/dynamic";
 import SearchBar from "../components/SearchBar";
+import { useState } from "react";
 
 const AMapComponent = dynamic(() => import("../components/AMap"), {
   ssr: false,
@@ -15,6 +16,9 @@ const InfoPanel = dynamic(() => import("../components/InfoPanel"), {
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [currentPoi, setCurrentPoi] = useState({});
+  const clickPoiMaker = (poi: any) => setCurrentPoi(poi);
+
   return (
     <>
       <Head>
@@ -30,9 +34,9 @@ export default function Home() {
         <div className="map-wrapper w-[390px] h-full">
           <SearchBar />
           <div className="h-[70vh]">
-            <AMapComponent />
+            <AMapComponent poiClick={clickPoiMaker} />
           </div>
-          <InfoPanel restaurantInfo={{}} addressArr={[]} />
+          <InfoPanel restaurantInfo={currentPoi} addressArr={[]} />
         </div>
       </main>
     </>

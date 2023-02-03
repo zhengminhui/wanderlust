@@ -1,32 +1,18 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import AMapLoader from "@amap/amap-jsapi-loader";
 import { mockData } from "./mock";
 
-const AMapComponent = () => {
+const AMapComponent = ({ poiClick }) => {
   const mapRef = useRef(null);
+  const [currentPoi, setCurrentPoi] = useState({});
+
   let mapObject: any;
   // 美和园 116.323046,40.033819
   // 清榆园 116.512079,40.048304
   // 好世界 116.462882, 39.921236
   const mockPoints = [
-    [116.323046, 40.033819],
-    [116.512079, 40.048304],
-    [116.462882, 39.921236],
-  ];
-
-  const pointsWithName = [
-    {
-      name: "美和园",
-      latlng: [116.323046, 40.033819],
-    },
-    {
-      name: "清榆园",
-      latlng: [116.512079, 40.048304],
-    },
-    {
-      name: "好世界",
-      latlng: [116.462882, 39.921236],
-    },
+    [116.35, 39.96],
+    [116.44, 39.91],
   ];
 
   const getCenter = (pointsArr: any) => {
@@ -96,14 +82,42 @@ const AMapComponent = () => {
             });
             var circle = new AMap.Circle({
               center: new AMap.LngLat(center[0], center[1]), // 圆心位置
-              radius: 5000, //半径
+              radius: 3000, //半径
               strokeColor: "#F33", //线颜色
               strokeOpacity: 1, //线透明度
               strokeWeight: 1, //线粗细度
               fillColor: "#ee2200", //填充颜色
-              fillOpacity: 0.35, //填充透明度
+              fillOpacity: 0.3, //填充透明度
             });
             mapInstance.add([centerMarker, circle]);
+
+            const poiMarkerClickFn = (poi) => {
+              setCurrentPoi(poi);
+              poiClick(poi);
+              console.log("poiMarkerClickFn", poi);
+
+              // get new route distance and time after click new poi
+              mockPoints.forEach((point, index) => {
+                var driving = new AMap.Driving({
+                  // 驾车路线规划策略，AMap.DrivingPolicy.LEAST_TIME是最快捷模式
+                  policy: AMap.DrivingPolicy.LEAST_TIME,
+                  extensions: "all",
+                });
+
+                var startLngLat = point;
+
+                var endLngLat = poi?.location?.split(",");
+                console.log("end", poi, endLngLat);
+
+                driving.search(
+                  startLngLat,
+                  endLngLat,
+                  function (status: any, result: any) {
+                    console.log(point, status, result);
+                  }
+                );
+              });
+            };
 
             mockData.pois.forEach((poi) => {
               const { location, name } = poi;
@@ -124,28 +138,10 @@ const AMapComponent = () => {
               });
 
               marker.setTitle(name);
-              mapInstance.add(marker);
-            });
-
-            // get route distance and time
-            pointsWithName.forEach((point, index) => {
-              var driving = new AMap.Driving({
-                // 驾车路线规划策略，AMap.DrivingPolicy.LEAST_TIME是最快捷模式
-                policy: AMap.DrivingPolicy.LEAST_TIME,
-                extensions: "all",
+              marker.on("click", function (e) {
+                poiMarkerClickFn(poi);
               });
-
-              var startLngLat = point.latlng;
-              var endLngLat = [116.415402, 40.057044];
-              const name = point.name;
-
-              driving.search(
-                startLngLat,
-                endLngLat,
-                function (status: any, result: any) {
-                  console.log(name, status, result);
-                }
-              );
+              mapInstance.add(marker);
             });
           }
         })
