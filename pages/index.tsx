@@ -1,10 +1,12 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-
+import { Button, Drawer } from "antd";
 import dynamic from "next/dynamic";
 import SearchBar from "../components/SearchBar";
-import { useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { placeState } from "../atoms/atom";
+import useFetchPlaces from "hooks/useFetchPlaces";
+import RestaurantList from "components/RestaurantList";
 
 const AMapComponent = dynamic(() => import("../components/AMap"), {
   ssr: false,
@@ -13,11 +15,25 @@ const InfoPanel = dynamic(() => import("../components/InfoPanel"), {
   ssr: false,
 });
 
-const inter = Inter({ subsets: ["latin"] });
-
 export default function Home() {
   const [currentPoi, setCurrentPoi] = useState({});
   const clickPoiMaker = (poi: any) => setCurrentPoi(poi);
+  const [place] = useRecoilState(placeState);
+
+  const { data } = useFetchPlaces(place);
+
+  console.log({ data });
+  const { pois = [] } = data;
+
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -27,16 +43,30 @@ export default function Home() {
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="main items-center flex flex-col w-[50%] m-auto">
-        <div className="banner h-[5vh] mx-4 flex items-center text-xl">
-          今晚去哪吃
-        </div>
-        <div className="map-wrapper w-[390px] h-full">
+      <main className="main  flex flex-row w-full h-[100vh] m-auto">
+        <div className="banner mx-4 flex flex-col text-xl">
+          <div className="mx-2 my-4">What to eat?</div>
           <SearchBar />
-          <div className="h-[70vh]">
-            <AMapComponent poiClick={clickPoiMaker} />
-          </div>
+          <RestaurantList pois={pois} />
           <InfoPanel restaurantInfo={currentPoi} addressArr={[]} />
+        </div>
+        <div className="map-wrapper w-full h-full">
+          <AMapComponent poiClick={clickPoiMaker} pois={pois} />
+        </div>
+        <div>
+          <Button type="primary" onClick={showDrawer}>
+            Open
+          </Button>
+          <Drawer
+            title="Basic Drawer"
+            placement="right"
+            onClose={onClose}
+            open={open}
+          >
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+          </Drawer>
         </div>
       </main>
     </>

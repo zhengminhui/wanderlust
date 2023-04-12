@@ -1,27 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import { Input } from "antd";
+import { useRecoilState } from "recoil";
+import { placeState } from "atoms/atom";
 
 const { Search } = Input;
 
 const SearchBar: React.FC = () => {
-  const [address, setAddress] = useState("");
+  const [place, setPlace] = useRecoilState(placeState);
+
   const onSearch = (value: string) => {
-    console.log(value);
-    setAddress(value);
+    setPlace(value);
   };
 
   return (
-    <div>
+    <div className="mb-2">
       <Search
         className="bg-blue-300"
         placeholder="What to eat tonight?"
         allowClear
         bordered
         enterButton="Search"
-        size="large"
+        size="middle"
         onSearch={onSearch}
       />
-      <div className="my-2 mx-2">{address}</div>
     </div>
   );
 };

@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AMapLoader from "@amap/amap-jsapi-loader";
-import { mockData } from "./mock";
 
-const AMapComponent = ({ poiClick }) => {
+const AMapComponent = ({ poiClick, pois }) => {
   const mapRef = useRef(null);
   const [currentPoi, setCurrentPoi] = useState({});
 
@@ -61,7 +60,7 @@ const AMapComponent = ({ poiClick }) => {
             const mapInstance = new AMap.Map("map-container", {
               //设置地图容器id
               viewMode: "3D", //是否为3D地图模式
-              zoom: 10, //初始化地图级别
+              zoom: 12, //初始化地图级别
               center: [116.462882, 39.921236], //初始化地图中心点位置
             });
             mapRef.current = mapInstance;
@@ -119,7 +118,7 @@ const AMapComponent = ({ poiClick }) => {
               });
             };
 
-            mockData.pois.forEach((poi) => {
+            pois.forEach((poi) => {
               const { location, name } = poi;
               const locArr = location.split(",");
               const lng = locArr[0];
