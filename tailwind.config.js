@@ -6,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {},
   },
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  },
 };

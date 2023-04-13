@@ -62,6 +62,7 @@ const AMapComponent = ({ poiClick, pois }) => {
               viewMode: "3D", //是否为3D地图模式
               zoom: 12, //初始化地图级别
               center: [116.462882, 39.921236], //初始化地图中心点位置
+              mapStyle: "amap://styles/whitesmoke"
             });
             mapRef.current = mapInstance;
 

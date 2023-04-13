@@ -2,11 +2,12 @@ import Head from "next/head";
 import { Button, Drawer } from "antd";
 import dynamic from "next/dynamic";
 import SearchBar from "../components/SearchBar";
-import { FC, useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { placeState } from "../atoms/atom";
 import useFetchPlaces from "hooks/useFetchPlaces";
 import RestaurantList from "components/RestaurantList";
+import PageFooter from "components/PageFooter";
 
 const AMapComponent = dynamic(() => import("../components/AMap"), {
   ssr: false,
@@ -43,19 +44,24 @@ export default function Home() {
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="main  flex flex-row w-full h-[100vh] m-auto">
-        <div className="banner mx-4 flex flex-col text-xl">
-          <div className="mx-2 my-4">What to eat?</div>
-          <SearchBar />
-          <RestaurantList pois={pois} />
-          <InfoPanel restaurantInfo={currentPoi} addressArr={[]} />
-        </div>
-        <div className="map-wrapper w-full h-full">
-          <AMapComponent poiClick={clickPoiMaker} pois={pois} />
-        </div>
-        <div>
-          <Button type="primary" onClick={showDrawer}>
-            Open
+      <main className="flex flex-col w-full h-[100vh] m-auto">
+        <div className="content flex flex-row max-h-[92vh]  h-[calc(100vh_-_5rem)]">
+          <div className="banner mx-4 flex flex-col text-xl">
+            <div className="mx-2 my-4">今晚去哪吃？</div>
+            <SearchBar />
+            <RestaurantList pois={pois} />
+            <InfoPanel restaurantInfo={currentPoi} addressArr={[]} />
+          </div>
+          <div className="map-wrapper w-full">
+            <AMapComponent poiClick={clickPoiMaker} pois={pois} />
+          </div>
+
+          <Button
+            type="primary"
+            onClick={showDrawer}
+            className="absolute right-4 top-4"
+          >
+            Add new address
           </Button>
           <Drawer
             title="Basic Drawer"
@@ -67,6 +73,9 @@ export default function Home() {
             <p>Some contents...</p>
             <p>Some contents...</p>
           </Drawer>
+        </div>
+        <div className="">
+          <PageFooter />
         </div>
       </main>
     </>
