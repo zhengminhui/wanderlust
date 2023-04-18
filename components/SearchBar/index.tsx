@@ -13,13 +13,13 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <div className="mb-6">
+    <div className="my-4">
       <Search
         placeholder="What to eat tonight?"
         allowClear
         enterButton="Search"
         onSearch={onSearch}
-        style={{ width: "95%" }}
+        style={{ width: "100%" }}
       />
     </div>
   );

@@ -8,7 +8,10 @@ module.exports = {
     extend: {},
     fontFamily: {},
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss'),
+    require('autoprefixer'),
+  ],
   corePlugins: {
     preflight: false,
   },
