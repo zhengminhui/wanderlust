@@ -2,7 +2,7 @@ import { Card } from "antd";
 
 export default function RestaurantList({ pois }) {
   return (
-    <div className="flex flex-col h-full max-h-[60%]  overflow-y-auto">
+    <div className="flex flex-col h-full max-h-[60%]  overflow-y-auto scrollbar">
       {(pois || []).map((p, index) => {
         const { name, address } = p;
         return <Restaurant key={index} name={name} address={address} />;
