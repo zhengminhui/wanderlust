@@ -2,7 +2,7 @@ export default function PageFooter() {
   return (
     <div className="flex justify-center h-20 items-center text-gray-500 bg-gray-200 flex-col">
       <div>
-        What to eat tonight © 2023:{" "}
+        what to eat © 2023:{" "}
         <a class="underline" href="https://zhengminhui.com">
           zhengminhui.com
         </a>

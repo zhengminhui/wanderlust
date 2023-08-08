@@ -3,8 +3,9 @@ const InfoPanel = ({ restaurantInfo, addressArr }) => {
   console.log(restaurantInfo, addressArr);
 
   return (
-    <div className="bottom-box h-[20vh] mx-4 mt-4">
-      <p>当前选择{name}</p>
+    <div className="border border-solid border-indigo-600 h-[20vh] mx-4 mt-4 px-2 py-2 flex flex-col">
+      <div>当前选择</div>
+      <div>{name}</div>
       {(addressArr.length ? addressArr : []).map((item, index) => {
         const { address, distance, time, taxi_cost } = item;
         return (

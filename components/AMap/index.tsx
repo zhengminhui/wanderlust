@@ -82,12 +82,12 @@ const AMapComponent = ({ poiClick, pois }) => {
             });
             var circle = new AMap.Circle({
               center: new AMap.LngLat(center[0], center[1]), // 圆心位置
-              radius: 3000, //半径
-              strokeColor: "#F33", //线颜色
+              radius: 2000, //半径
+              strokeColor: "blueviolet", //线颜色
               strokeOpacity: 1, //线透明度
               strokeWeight: 1, //线粗细度
-              fillColor: "#ee2200", //填充颜色
-              fillOpacity: 0.3, //填充透明度
+              fillColor: "gainsboro", //填充颜色
+              fillOpacity: 0.4, //填充透明度
             });
             mapInstance.add([centerMarker, circle]);
 
