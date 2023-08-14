@@ -1,13 +1,22 @@
 export default function PageFooter() {
   return (
-    <div className="flex justify-center h-20 items-center text-gray-500 bg-gray-200 flex-col">
+    <div className="flex shrink-0 justify-center h-20 items-center text-[#D5FFE4] bg-[#6F61C0] flex-col">
       <div>
-        what to eat © 2023:{" "}
-        <a class="underline" href="https://zhengminhui.com">
+        🏖️ Wanderlust Map © 2023:{" "}
+        <a className="underline" target="_blank" href="https://zhengminhui.com">
           zhengminhui.com
         </a>
       </div>
-      <div>Created by Minhui</div>
+      <div>
+        Project #2, Created by{" "}
+        <a
+          className="underline"
+          target="_blank"
+          href="https://twitter.com/wanzaiwanger"
+        >
+          @Minhui
+        </a>
+      </div>
     </div>
   );
 }

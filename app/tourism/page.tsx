@@ -1,5 +1,25 @@
+"use client";
 import Head from "next/head";
+import AMapComponent from "./map";
+import VisitedPlaces from "./list";
+import { mockResp } from "./fav";
+
 export default function Wanderlust() {
+  const poiClickHandler = (e) => {
+    console.log(e);
+  };
+  const {
+    data: { items: mockData },
+  } = mockResp;
+
+  const pois = mockData.filter((dt) => {
+    const {
+      type,
+      data: { lat, lon },
+    } = dt;
+    return type === 110 && lat && lon;
+  });
+
   return (
     <>
       <Head>
@@ -8,9 +28,12 @@ export default function Wanderlust() {
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex flex-col w-full h-[100vh] m-auto">
-        <div className="content flex flex-row max-h-[92vh]  h-[calc(100vh_-_5rem)]">
-          <div className="map-wrapper w-full">Wanderlust map</div>
+      <main className="flex flex-col m-auto">
+        <div className="content flex flex-row m-6 h-[80vh]">
+          <VisitedPlaces pois={pois} />
+          <div className="map-wrapper w-full h-full">
+            <AMapComponent poiClick={poiClickHandler} pois={pois} />
+          </div>
         </div>
       </main>
     </>
