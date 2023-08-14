@@ -13,8 +13,6 @@ export default function Page() {
       </Head>
       <main className="flex flex-col min-h-screen mx-6 py-6">
         <div className="content flex flex-col max-h-[92vh]  h-[calc(100vh_-_5rem)]">
-          <UserButton afterSignOutUrl="/" />
-
           <Link href="/dinner" className="my-6 text-xl" key="dinner">
             dinner
           </Link>
